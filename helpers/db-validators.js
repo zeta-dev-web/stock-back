@@ -4,9 +4,12 @@ const Categoria = require("../models/categoria");
 const Producto = require("../models/producto");
 
 const esRoleValido = async (role = "USER_ROLE") => {
-  const existeRole = await Role.findOne({ role });
-  if (!existeRole) {
-    throw new Error(`El rol ${role} no está registrado en la BD`);
+  try {
+    const existeRole = await Role.findOne({ role });
+    if (!existeRole) {
+      throw new Error(`El rol ${role} no está registrado en la BD`);
+    }
+  } catch (error) {
   }
 };
 
