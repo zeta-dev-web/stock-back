@@ -30,4 +30,4 @@ const VentasSchema = Schema({
 });
 
 
-module.exports = model("Ventas", VentasSchema);
+module.exports = model("Ventas", VentasSchema)
