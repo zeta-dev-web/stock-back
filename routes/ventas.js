@@ -3,13 +3,14 @@ const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJWT } = require("../middlewares/validar-jwt");
 const { esAdminRole, tieneRol } = require("../middlewares/validar-role");
+const {ventaExiste} = require("../helpers/db-validators");
 
 const {
-    obtenerVentas,
-    actualizarVentas,
-    borrarVentas,
-    obtenerVenta,
-    ventaPost,
+   ventaPost,
+  obtenerVentas,
+  obtenerVenta,
+  actualizarVenta,
+  borrarVenta,
   } = require("../controllers/ventas");
 
   const router = Router();
@@ -31,22 +32,19 @@ router.post(
   "/",
   [
     validarJWT, 
-    tieneRol("ADMIN_ROLE", "GERENTE"),
-    check("nombre", "El nombre es obligatorio").notEmpty(),
+    tieneRol("ADMIN_ROLE", "USER_ROLE"),
   ],
-  crearventa
+  ventaPost
 );
 
 router.put(
   "/:id",
   [
     validarJWT,
-    
     esAdminRole,
     check("id", "No es un id válido").isMongoId(),
     
     check("id").custom(ventaExiste),
-    check("nombre", "El nombre es obligatorio").notEmpty(),
     validarCampos,
   ],
   actualizarVenta
@@ -59,8 +57,6 @@ router.delete(
     
     esAdminRole,
     check("id", "No es un id válido").isMongoId(),
-    
-    check("id").custom(categoriaExiste),
     validarCampos,
   ],
   borrarVenta
