@@ -48,7 +48,6 @@ router.put(
     validarJWT,
     check("id", "No es un Id válido").isMongoId(),
     check("id").custom(existeUsuarioPorId),
-    check("role").custom(esRoleValido),
     validarCampos,
   ],
   usuarioPut
