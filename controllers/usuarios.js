@@ -46,7 +46,12 @@ const usuarioPost = async (req = request, res) => {
 const usuarioPut = async (req = request, res) => {
   const { id } = req.params;
 
-  const { password, _id, email, ...resto } = req.body;
+  const { password, _id, email, state, ...resto } = req.body;
+
+  if (state !== undefined) {
+    // Si state está presente en el cuerpo de la solicitud, lo incluimos en el objeto resto
+    resto.state = state;
+  }
 
   const salt = bcrypt.genSaltSync();
   resto.password = bcrypt.hashSync(password, salt);
