@@ -49,6 +49,7 @@ router.put(
     check("id", "No es un Id válido").isMongoId(),
     check("id").custom(existeUsuarioPorId),
     check("role").custom(esRoleValido),
+    check("password").optional().isLength({ min: 8 }).withMessage("La contraseña debe tener al menos 8 caracteres"),
     validarCampos,
   ],
   usuarioPut

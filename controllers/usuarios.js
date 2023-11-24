@@ -58,6 +58,13 @@ const usuarioPut = async (req, res) => {
   // Obtener el usuario actual
   const usuarioActual = await Usuario.findById(id);
 
+  // Validar la longitud de la contraseña
+  if (password && password.length < 8) {
+    return res.status(400).json({
+      msg: "La contraseña debe tener al menos 8 caracteres",
+    });
+  }
+
   // Resto del código para actualizar el usuario
   const salt = bcrypt.genSaltSync();
   const hashedPassword = password ? bcrypt.hashSync(password, salt) : usuarioActual.password;
