@@ -43,15 +43,35 @@ const usuarioPost = async (req = request, res) => {
   });
 };
 
-const usuarioPut = async (req = request, res) => {
+const usuarioPut = async (req, res) => {
   const { id } = req.params;
+  const { name, email, password, role } = req.body;
 
-  const { password, _id, email, ...resto } = req.body;
+  // Verificar si el nuevo correo electrónico ya está registrado
+  const existeEmail = await Usuario.findOne({ email, _id: { $ne: id } });
+  if (existeEmail) {
+    return res.status(400).json({
+      msg: `El correo ${email} ya está registrado para otro usuario`,
+    });
+  }
 
+  // Obtener el usuario actual
+  const usuarioActual = await Usuario.findById(id);
+
+  // Resto del código para actualizar el usuario
   const salt = bcrypt.genSaltSync();
-  resto.password = bcrypt.hashSync(password, salt);
+  const hashedPassword = password ? bcrypt.hashSync(password, salt) : usuarioActual.password;
+  
+  const updatedRole = role || usuarioActual.role; // Tomar el rol existente si no se proporciona uno nuevo
+  
+  let data = {
+    name: name || usuarioActual.name,
+    email,
+    password: hashedPassword,
+    role: updatedRole,
+  };
 
-  const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
+  const usuario = await Usuario.findByIdAndUpdate(id, data, { new: true });
 
   res.status(200).json({
     message: "Usuario actualizado",
