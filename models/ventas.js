@@ -29,6 +29,10 @@ const VentasSchema = Schema({
     default: 0,
     required: true,
   },
+  pago: {
+    type: String,
+    default: true, //
+  },
   estado: {
     type: Boolean,
     default: true, //

@@ -44,10 +44,11 @@ const obtenerVenta = async (req = request, res = response) => {
 };
 
 const ventaPost = async (req, res) => {
-  const { descripcion, total, date, time } = req.body;
+  const { descripcion, total, date, time, pago } = req.body;
 
   try {
     const data = {
+      pago,
         date,
         time,
       descripcion,
