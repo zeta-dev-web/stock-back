@@ -14,8 +14,14 @@ const VentasSchema = Schema({
     type: String,
    required: true,
   },
-  descripcion: {
-    type: String,
+ descripcion: {
+    type: [
+      {
+        cantidad: { type: Number, required: true },
+        producto: { type: String, required: true },
+        precio: { type: Number, required: true },
+      },
+    ],
     required: true,
   },
   total: {
