@@ -303,3 +303,29 @@ define una única ruta en Express.js para realizar búsquedas. Utiliza el contro
 
 Categorias:
 define rutas en Express.js para realizar operaciones CRUD en el recurso "categorias". Utiliza diversos middlewares para validar la autenticación del token (validarJWT), el rol del usuario (esAdminRole y tieneRol), así como la existencia de la categoría (categoriaExiste). Las rutas incluyen acciones como obtener todas las categorías, obtener una categoría por su ID, crear una nueva categoría, actualizar una categoría existente y borrar una categoría. Además, se aplican validaciones específicas para garantizar la integridad de los datos y la seguridad de las operaciones.
+
+Productos:
+establece rutas en Express.js para realizar operaciones CRUD en el recurso "productos". Utiliza diversos middlewares para validar la autenticación del token (validarJWT), el rol del usuario (esAdminRole), así como la existencia del producto (productoExiste). Las rutas incluyen acciones como obtener todos los productos, obtener un producto por su ID, crear un nuevo producto, actualizar un producto existente y borrar un producto. Además, se aplican validaciones específicas para garantizar la integridad de los datos y la seguridad de las operaciones.
+
+Usuarios:
+Utiliza varios middlewares para validar la autenticación del token (validarJWT), el rol del usuario (tieneRol, esAdminRole), y la existencia del usuario por su ID (existeUsuarioPorId). Además, se aplican validaciones específicas para garantizar la integridad de los datos al crear, actualizar o borrar un usuario. Estas validaciones incluyen verificar la existencia del email en la base de datos, el formato del email, la longitud de la contraseña y la validez del rol asignado al usuario.
+
+Ventas: 
+Utiliza varios middlewares para validar la autenticación del token (validarJWT), el rol del usuario (tieneRol, esAdminRole), y la existencia de la venta por su ID (ventaExiste). Además, se aplican validaciones específicas para garantizar la integridad de los datos al crear, actualizar o borrar una venta. Estas validaciones incluyen verificar la validez del ID de la venta y garantizar que solo ciertos roles tengan acceso a ciertas operaciones.
+
+
+GIT IGNORE: 
+este archivo se utiliza para indicar a Git qué archivos y carpetas debe ignorar durante las operaciones de seguimiento y confirmación. Esto es útil para excluir archivos generados automáticamente, dependencias de terceros, archivos de configuración local y otros elementos que no deben ser compartidos en el repositorio Git.
+
+Template.env:
+es una convención informal utilizada por algunos desarrolladores para proporcionar un modelo de configuración de variables de entorno en proyectos como este.
+
+Index:
+Configuración de Variables de Entorno: Utiliza dotenv para cargar la configuración de variables de entorno desde un archivo .env en el proyecto. Esto es comúnmente utilizado para almacenar configuraciones sensibles o específicas del entorno, como claves de API o información de la base de datos.
+
+Inicio del Servidor: Importa la clase Server desde el archivo server.js en el directorio models y crea una nueva instancia de esta clase. Luego, llama al método listen() de la instancia, que inicia el servidor y lo pone en funcionamiento, escuchando las solicitudes en el puerto especificado en las variables de entorno o en un valor predeterminado.
+
+Package lock json: es una herramienta para garantizar la consistencia y reproducibilidad de las instalaciones de dependencias en proyectos como este.
+
+Package json: ayuda a configurar y gestionar el proyecto de manera efectiva.
+
