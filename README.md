@@ -124,14 +124,12 @@ Exporta las funciones para su uso en otros archivos (module.exports):
 
 Hace que las funciones CRUD (ventaPost, obtenerVentas, obtenerVenta, actualizarVenta, borrarVenta) estén disponibles para su uso en otros archivos que requieran este módulo.
 
+
 Database: sirve para que haya una mejor conexión a la base de datos de MongoDB utilizando Mongoose.
 
 Importación de Mongoose:
 
-Importa la biblioteca Mongoose, que facilita la interacción con bases de datos MongoDB desde Node.js.
-Definición de la función dbConnection:
-
-Define una función asíncrona llamada dbConnection que se encargará de establecer la conexión a la base de datos.
+Importa la biblioteca Mongoose, que facilita la interacción con bases de datos MongoDB desde Node.js. 
 Bloque try-catch para la conexión:
 
 Dentro de la función, hay un bloque try-catch para manejar posibles errores durante el proceso de conexión.
@@ -147,4 +145,93 @@ Exporta la función dbConnection para que pueda ser utilizada en otros archivos 
 Este código se utiliza para encapsular la lógica de conexión a la base de datos MongoDB, proporcionando manejo de errores y mensajes informativos durante el proceso. La conexión a la base de datos se realiza de forma asíncrona debido al uso de async-await.
  
 
+Helpers:
 
+Los "helpers" son herramientas y funciones que ayudan a los desarrolladores a escribir código de manera más eficiente, mejorar la calidad del código y proporcionar asistencia durante el proceso de desarrollo.
+
+Validaciones:
+Validación de Rol (esRoleValido):
+Verifica si un rol específico existe en la base de datos de roles. Si el rol no está registrado, arroja un error indicando que el rol no está presente en la base de datos.
+Validación de Email (emailExiste):
+
+Comprueba si un correo electrónico ya está registrado en la base de datos de usuarios. Si el correo ya existe, arroja un error indicando que el correo ya está registrado.
+Validación de Usuario por ID (existeUsuarioPorId):
+
+Verifica la existencia de un usuario por su ID en la base de datos. Si el usuario no existe o está inactivo, arroja un error correspondiente.
+Validación de Categoría por ID (categoriaExiste):
+
+Comprueba la existencia de una categoría por su ID en la base de datos. Si la categoría no existe o está inactiva, arroja un error indicando la situación.
+Validación de Producto por ID (productoExiste):
+
+Verifica la existencia de un producto por su ID en la base de datos. Si el producto no existe, arroja un error indicando que el ID no está presente en la base de datos.
+Validación de Venta por ID (ventaExiste):
+
+Comprueba la existencia de una venta por su ID en la base de datos. Si la venta no existe, arroja un error indicando que el ID de venta no está registrado.
+
+Generar JWT:
+Importación de jsonwebtoken:
+Importa la biblioteca jsonwebtoken, que permite la creación y verificación de tokens JWT en Node.js.
+Función generarJWT:
+
+Define una función llamada generarJWT que toma un parámetro uid (identificador único, generalmente el ID del usuario).
+Creación del Payload:
+
+Crea un objeto payload que contiene la información que se incluirá en el token. En este caso, solo contiene el uid.
+Generación del Token JWT:
+
+Utiliza jwt.sign para generar el token JWT. Se proporciona el payload, la clave secreta (process.env.SECRETORPRIVATEKEY) para firmar el token y un objeto de opciones que incluye la duración de validez del token (4 horas en este caso).
+Manejo de Promesas:
+
+La función devuelve una Promesa, permitiendo el uso de resolve y reject para gestionar el resultado de la operación de generación del token. Si hay un error durante la generación del token, se imprime en la consola, se rechaza la Promesa con un mensaje de error; de lo contrario, se resuelve con el token generado.
+
+Middlewares: 
+el término "middlewares" se utiliza comúnmente en el contexto de desarrollo web para describir funciones intermedias en el manejo de solicitudes y respuestas HTTP, en Visual Studio Code, el concepto podría extenderse las extensiones y funciones adicionales que mejoran la experiencia de desarrollo en el editor.
+
+Validar Campos:
+
+Importación de express-validator:
+Importa la función validationResult de la biblioteca express-validator. Esta función extrae y organiza los resultados de las validaciones realizadas en las rutas de Express.
+Middleware validarCampos:
+
+Define una función de middleware llamada validarCampos que toma la solicitud (req), la respuesta (res), y la función siguiente en la cadena (next).
+Verificación de Errores de Validación:
+
+Utiliza validationResult(req) para obtener los resultados de las validaciones realizadas en las rutas anteriores. Si hay errores de validación, devuelve una respuesta de estado 400 (Bad Request) con los errores en formato JSON.
+Continuación de la Cadena:
+
+Si no hay errores de validación, llama a la función next(), permitiendo que la cadena de middlewares continúe con el siguiente middleware o ruta.
+Exportación del Middleware:
+
+Exporta el middleware validarCampos para que pueda ser utilizado en otras partes del código de Express.js.
+
+Validar JWT:
+Importación de dependencias:
+Importa los objetos request y response de Express, la biblioteca jsonwebtoken para la manipulación de tokens JWT, y el modelo Usuario que probablemente representa un usuario en la base de datos.
+Middleware validarJWT:
+
+Define una función de middleware llamada validarJWT que toma la solicitud (req), la respuesta (res), y la función siguiente en la cadena (next).
+Obtención del Token:
+
+Extrae el token JWT del encabezado de la solicitud con la clave "x-token". Si no se proporciona el token, responde con un estado 401 (Unauthorized) indicando que el token no se reconoce.
+Verificación y Obtención del Usuario:
+
+Utiliza jwt.verify para verificar la validez del token y obtener el identificador único del usuario (uid). Luego, busca el usuario en la base de datos mediante el modelo Usuario utilizando el uid.
+Validación del Estado del Usuario:
+
+Verifica si el usuario existe y está activo (state: true). Si el usuario no existe o está inactivo, responde con un estado 401 y un mensaje indicando que el token no es válido.
+
+Validar Rol:
+Middleware esAdminRole:
+Verifica si el usuario tiene un rol de administrador ("ADMIN_ROLE"). Si el usuario no está presente en la solicitud, responde con un estado 500. Si el usuario no es un administrador, responde con un estado 401 indicando que el usuario no tiene privilegios de administrador.
+Middleware tieneRol:
+
+Toma una serie de roles como argumentos y devuelve un middleware. Verifica si el usuario tiene al menos uno de los roles proporcionados. Si el usuario no está presente en la solicitud, responde con un estado 500. Si el usuario no tiene ninguno de los roles requeridos, responde con un estado 401 indicando que el usuario no tiene los roles necesarios.
+Manejo de Casos Sin Usuario:
+
+Ambos middlewares inicialmente verifican si el usuario está presente en la solicitud. Si no está presente, responde con un estado 500 indicando que se intenta verificar el rol sin haber validado el token.
+Respuestas de Estado y Mensajes:
+
+En caso de fallo en las verificaciones de rol, los middlewares responden con estados 500 o 401, proporcionando mensajes descriptivos sobre el motivo del error.
+Exportación de Middlewares:
+
+Exporta los middlewares esAdminRole y tieneRol para que puedan ser utilizados en otras partes del código de Express.js.
