@@ -235,3 +235,71 @@ En caso de fallo en las verificaciones de rol, los middlewares responden con est
 Exportación de Middlewares:
 
 Exporta los middlewares esAdminRole y tieneRol para que puedan ser utilizados en otras partes del código de Express.js.
+
+Models: 
+
+el termino "models" se refiere a las representaciones de datos utilizadas para estructurar la información y manejar la lógica de negocio en una aplicación. La interpretación específica puede variar según el lenguaje de programación y el framework utilizado en un proyecto.
+
+Categoria: 
+Define un esquema para la entidad "Categoria" utilizando la función Schema. Este esquema tiene tres campos: nombre (String) que es obligatorio y único, estado (Boolean) con un valor por defecto de true, y usuario (ObjectId) que referencia a un documento del modelo "Usuario" y es obligatorio.
+Configuración de Restricciones del Campo nombre:
+
+Configura el campo nombre con restricciones, indicando que es obligatorio (required: true) y debe ser único (unique: true). Si no se cumple alguna de estas restricciones, se proporciona un mensaje de error personalizado.
+Campo estado por Defecto:
+
+Configura el campo estado con un valor por defecto de true. Este campo podría utilizarse para indicar si una categoría está activa o inactiva.
+Exportación del Modelo:
+
+Exporta el modelo "Categoria" creado a partir del esquema (CategoriaSchema) utilizando la función model. El modelo puede ser utilizado para realizar operaciones de base de datos relacionadas con la entidad "Categoria".
+
+Producto:
+Definición del Esquema (ProductoSchema):
+Utiliza la función Schema de Mongoose para definir la estructura del modelo "Producto". Este esquema tiene varios campos, como nombre, estado, usuario, categoria, precio, descripcion, disponible, img y stock, cada uno con su tipo de dato y configuraciones específicas.
+Restricciones del Campo nombre:
+
+Configura el campo nombre como obligatorio (required: true) y único (unique: true). Si no se cumple alguna de estas restricciones, se proporciona un mensaje de error personalizado.
+Campos con Valores por Defecto:
+
+Configura los campos estado, precio, disponible y stock con valores por defecto (default). Por ejemplo, estado tiene un valor por defecto de true, indicando que el producto está activo.
+Referencias a Otros Modelos (usuario y categoria):
+
+Configura los campos usuario y categoria como referencias a documentos de los modelos "Usuario" y "Categoria", respectivamente. Estas referencias se establecen mediante el tipo Schema.Types.ObjectId y la propiedad ref.
+Exportación del Modelo:
+
+Exporta el modelo "Producto" creado a partir del esquema (ProductoSchema) utilizando la función model. El modelo puede ser utilizado para realizar operaciones de base de datos relacionadas con la entidad "Producto".
+
+Rol:
+define un modelo de datos en Mongoose para la entidad "Role" en una aplicación de Node.js con MongoDB. El modelo tiene un solo campo llamado role de tipo String, que es obligatorio. Se exporta el modelo "Role" creado a partir de este esquema, permitiendo su uso en operaciones de base de datos relacionadas con roles.
+
+Server:
+Configuración de rutas y puertos:
+
+Define rutas y puertos para diferentes recursos de la API, como autenticación, usuarios, categorías, productos, búsqueda y ventas. 
+
+Middlewares:
+
+Configura middlewares, como cors para manejar solicitudes HTTP, express.json() para el análisis de cuerpos JSON, y express.static para servir archivos estáticos desde la carpeta "public".
+Enrutamiento:
+
+Utiliza el método routes para asignar las rutas definidas a controladores específicos mediante el uso de archivos de rutas (por ejemplo, "../routes/auth").
+Arranque del servidor:
+
+Utiliza el método listen para iniciar el servidor en el puerto especificado, mostrando un mensaje en la consola cuando el servidor está en línea.
+
+Usuario:
+Este código define un método toJSON para el esquema de Mongoose llamado UsuarioSchema. El método se encarga de modificar la representación JSON de un objeto de usuario antes de enviarlo como respuesta. Elimina propiedades sensibles como __v y password, y reemplaza la propiedad _id por uid para mayor claridad. El esquema modificado se exporta como el modelo "Usuario" para su uso en operaciones relacionadas con usuarios en la base de datos MongoDB.
+
+Ventas:
+define un esquema de datos llamado VentasSchema utilizando Mongoose para una entidad "Ventas" en una aplicación de Node.js con MongoDB. El esquema contiene campos como usuario, time, date, descripcion, total y estado. Establece relaciones con otros modelos como "Usuario" a través del campo usuario. Además, proporciona valores predeterminados para algunos campos y establece restricciones de requerimiento. El esquema se exporta como el modelo "Ventas" para ser utilizado en operaciones relacionadas con ventas en la base de datos.
+
+Routes (rutas):
+Cuando se habla de "routes" nos referimos a la organización y desarrollo de estas rutas dentro del código fuente de la aplicación. Puedes utilizar Visual Studio Code para abrir y editar estos archivos de rutas, facilitando la gestión y modificación de las rutas de tu aplicación web. Cada archivo dentro de la carpeta "routes" podría contener definiciones de rutas específicas para autenticación (auth.js), usuarios (usuarios.js), etc. Estos archivos de rutas se encargan de manejar las solicitudes HTTP relacionadas con esas entidades específicas.
+
+Auth:
+define las rutas para la autenticación en una aplicación Express.js. Utiliza el middleware validarJWT para verificar la validez del token de autenticación en la ruta "/". Además, en la ruta "/login", utiliza el middleware check de Express Validator para validar los campos email y password en el cuerpo de la solicitud mediante reglas específicas. El middleware validarCampos se encarga de verificar si hubo errores de validación. Estas rutas están asociadas a funciones controladoras, como obtenerID y login, que manejan las lógicas de negocio correspondientes. El router finalmente se exporta para ser utilizado en la configuración principal de las rutas de la aplicación.
+
+Buscar:
+define una única ruta en Express.js para realizar búsquedas. Utiliza el controlador buscar proveniente de "../controllers/buscar" para manejar la lógica de búsqueda. La ruta espera dos parámetros en la URL, ":coleccion" y ":termino", que representan la colección en la que se realizará la búsqueda y el término de búsqueda, respectivamente. Cuando un cliente realiza una solicitud GET a esta ruta con los parámetros adecuados, la función buscar se encargará de procesar la búsqueda y devolver los resultados correspondientes. El router se exporta para ser utilizado en la configuración principal de las rutas de la aplicación.
+
+Categorias:
+define rutas en Express.js para realizar operaciones CRUD en el recurso "categorias". Utiliza diversos middlewares para validar la autenticación del token (validarJWT), el rol del usuario (esAdminRole y tieneRol), así como la existencia de la categoría (categoriaExiste). Las rutas incluyen acciones como obtener todas las categorías, obtener una categoría por su ID, crear una nueva categoría, actualizar una categoría existente y borrar una categoría. Además, se aplican validaciones específicas para garantizar la integridad de los datos y la seguridad de las operaciones.
