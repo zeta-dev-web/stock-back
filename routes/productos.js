@@ -13,7 +13,7 @@ const {
   actualizarProducto,
   borrarProducto,
   obtenerProducto,
-  productoPost,
+  productoPost,z
 } = require("../controllers/productos");
 
 const router = Router();
