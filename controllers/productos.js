@@ -4,14 +4,12 @@ const Producto = require("../models/producto");
 
 const obtenerProductos = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
-  const query = { estado: true };
 
   const [total, productos] = await Promise.all([
-    Producto.countDocuments(query),
-    Producto.find(query)
+    Producto.countDocuments(),
+    Producto.find()
       .skip(Number(desde))
       .limit(Number(limite))
-      
       .populate("categoria", "nombre")
       .populate("usuario", "email"),
   ]);
@@ -106,15 +104,24 @@ const actualizarProducto = async (req, res) => {
 const borrarProducto = async (req, res) => {
   const { id } = req.params;
 
-  const productoBorrado = await Producto.findByIdAndUpdate(
-    id,
-    { estado: false },
-    { new: true }
-  );
+  try {
+    const productoBorrado = await Producto.findOneAndDelete({ _id: id });
 
-  res.json({
-    productoBorrado,
-  });
+    if (!productoBorrado) {
+      return res.status(404).json({
+        mensaje: "Producto no encontrado",
+      });
+    }
+
+    res.json({
+      mensaje: "Producto eliminado",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Error al intentar borrar el producto",
+    });
+  }
 };
 
 module.exports = {
