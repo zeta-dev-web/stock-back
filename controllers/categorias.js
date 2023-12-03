@@ -54,11 +54,11 @@ const crearCategoria = async (req = request, res = response) => {
 
 const actualizarCategoria = async (req = request, res = response) => {
   const { id } = req.params;
-  const nombre = req.body.nombre.toUpperCase();
+  const { estado } = req.body;   
   const usuario = req.usuario._id;
-  console.log(id);
+
   const datos = {
-    nombre,
+    estado,
     usuario,
   };
 

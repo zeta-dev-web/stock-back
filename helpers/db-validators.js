@@ -36,10 +36,6 @@ const categoriaExiste = async (id) => {
   if (!existeCategoria) {
     throw new Error(`El id ${id} no existe en la BD`);
   }
-
-  if (!existeCategoria.estado) {
-    throw new Error(`La categoría ${existeCategoria.nombre} está inactiva`);
-  }
 };
 
 const productoExiste = async (id) => {

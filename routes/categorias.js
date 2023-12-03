@@ -48,9 +48,7 @@ router.put(
     
     esAdminRole,
     check("id", "No es un id válido").isMongoId(),
-    
     check("id").custom(categoriaExiste),
-    check("nombre", "El nombre es obligatorio").notEmpty(),
     validarCampos,
   ],
   actualizarCategoria
