@@ -9,6 +9,7 @@ const obtenerVentas = async (req = request, res = response) => {
     const [total, ventas] = await Promise.all([
       Ventas.countDocuments(query),
       Ventas.find(query)
+        .sort({ date: -1, time: -1 })
         .skip(Number(desde))
         .limit(Number(limite))
         .populate("usuario", "name"),

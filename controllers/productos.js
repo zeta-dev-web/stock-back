@@ -5,19 +5,27 @@ const Producto = require("../models/producto");
 const obtenerProductos = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
 
-  const [total, productos] = await Promise.all([
-    Producto.countDocuments(),
-    Producto.find()
-      .skip(Number(desde))
-      .limit(Number(limite))
-      .populate("categoria", "nombre")
-      .populate("usuario", "email"),
-  ]);
+  try {
+    const [total, productos] = await Promise.all([
+      Producto.countDocuments(),
+      Producto.find()
+        .sort({ nombre: 1 })
+        .skip(Number(desde))
+        .limit(Number(limite))
+        .populate("categoria", "nombre")
+        .populate("usuario", "email"),
+    ]);
 
-  res.json({
-    total,
-    productos,
-  });
+    res.json({
+      total,
+      productos,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Error al obtener los productos",
+    });
+  }
 };
 
 

@@ -7,6 +7,7 @@ const obtenerCategorias = async (req = request, res = response) => {
   const [total, categorias] = await Promise.all([
     Categoria.countDocuments(),
     Categoria.find()
+    .sort({ nombre: 1 })
       .skip(desde)
       .populate("usuario", "name email"),
    
