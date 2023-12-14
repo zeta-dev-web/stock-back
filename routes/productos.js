@@ -20,7 +20,6 @@ const router = Router();
 
 router.get("/", obtenerProductos);
 
-//Listar producto por id
 router.get(
   "/:id",
   [

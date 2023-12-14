@@ -45,7 +45,6 @@ const usuarioPut = async (req, res) => {
   const { id } = req.params;
   const { name, email, password, role } = req.body;
 
-  // Verificar si el nuevo correo electrónico ya está registrado
   const existeEmail = await Usuario.findOne({ email, _id: { $ne: id } });
   if (existeEmail) {
     return res.status(400).json({
@@ -53,17 +52,14 @@ const usuarioPut = async (req, res) => {
     });
   }
 
-  // Obtener el usuario actual
   const usuarioActual = await Usuario.findById(id);
 
-  // Validar la longitud de la contraseña
   if (password && password.length < 8) {
     return res.status(400).json({
       msg: "La contraseña debe tener al menos 8 caracteres",
     });
   }
 
-  // Resto del código para actualizar el usuario
   const salt = bcrypt.genSaltSync();
   const hashedPassword = password ? bcrypt.hashSync(password, salt) : usuarioActual.password;
   
