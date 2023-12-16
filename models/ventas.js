@@ -31,11 +31,11 @@ const VentasSchema = Schema({
   },
   pago: {
     type: String,
-    default: true, //
+    default: true, 
   },
   estado: {
     type: Boolean,
-    default: true, //
+    default: true, 
   },
 });
 

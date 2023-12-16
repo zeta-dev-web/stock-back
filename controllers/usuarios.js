@@ -63,7 +63,7 @@ const usuarioPut = async (req, res) => {
   const salt = bcrypt.genSaltSync();
   const hashedPassword = password ? bcrypt.hashSync(password, salt) : usuarioActual.password;
   
-  const updatedRole = role || usuarioActual.role; // Tomar el rol existente si no se proporciona uno nuevo
+  const updatedRole = role || usuarioActual.role; 
   
   let data = {
     name: name || usuarioActual.name,

@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zeta-dev-web/stock-back.git"
+    "url": "git+https:github.com/zeta-dev-web/stock-back.git"
   },
   "author": "Lourdes Cervera",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zeta-dev-web/stock-back/issues"
+    "url": "https:github.com/zeta-dev-web/stock-back/issues"
   },
-  "homepage": "https://github.com/zeta-dev-web/stock-back#readme",
+  "homepage": "https:github.com/zeta-dev-web/stock-back#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
