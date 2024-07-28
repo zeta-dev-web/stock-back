@@ -50,8 +50,8 @@ const ventaPost = async (req, res) => {
   try {
     const data = {
       pago,
-        date,
-        time,
+      date,
+      time,
       descripcion,
       total,
       usuario: req.usuario._id,
@@ -63,6 +63,7 @@ const ventaPost = async (req, res) => {
 
     res.status(201).json({
       msg: "Se agregó la venta",
+      ventaId: venta._id,  // Incluyendo el ID de la venta en la respuesta
     });
   } catch (error) {
     console.log(error);
